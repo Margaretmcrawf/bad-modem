@@ -12,6 +12,12 @@ import requests
 import wave
 import evdev
 
+mrs2str = {'113': 'u', '111': 's', '13': 'a', '131': 'r', '11': 'i', '133': 'w', '31': 'n', 
+'33': 'm', '1111': 'h', '1113': 'v', '1': 'e', '1311': 'l', '3': 't', '1131': 'f',
+ '1331': 'p', '1333': 'j', '3131': 'c', '3133': 'y', '3311': 'z', '3313': 'q', '3113': 'x', '3111': 'b', 
+ '333': 'o', '331': 'g', '311': 'd', '313': 'k'}
+
+
 def lowPass(filterorder, sig):
 
 	#function takes in an array that represents a signal and returns a version that has been through a low pass filter
@@ -25,7 +31,7 @@ def movingAverage (values, window):
 	sma = np.convolve(values, weights, 'valid')
 	return sma
 
-def letters(wave):
+def bits(wave):
 	amp_threshold = 7 #this is a placeholder
 	dash_threshold = 1000 #distinction between dot and dash
 	new_threshold = 3000 #threshold to be a new letter
@@ -40,12 +46,15 @@ def letters(wave):
 		else: #long pause or short pause
 			if len(chunk) > new_threshold:
 				letterlist.append(0)
-
-
+			#else do nothing
+	return ("".join(letterlist).split(0)).
 
  def isplit(iterable,splitters):
  	#a very nice split function, splits the iterable(list) on the splitter value
     return [list(g) for k,g in itertools.groupby(iterable,lambda x:x in splitters) if not k]
+
+def letters(bits):
+
 
 
 def record():
@@ -108,6 +117,9 @@ if __name__ == '__main__':
 
 	lowpassed = lowPass(audio)
 	smooth_magnitude = movingAverage(abs(lowpassed), 5) #takes the absolute value, then a moving average of that
+
+	bits = bits(smooth_magnitude)
+
 
 
 
