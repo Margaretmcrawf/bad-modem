@@ -120,7 +120,6 @@ if __name__ == '__main__':
 
 	bits = bits(smooth_magnitude)
 
-
-
-
-
+	word = ""
+	for bit in bits:
+		word += mrs2str(bit)
